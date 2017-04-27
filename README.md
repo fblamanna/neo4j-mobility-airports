@@ -148,3 +148,25 @@ for a in numberids:
 
 session.close()
 ```
+## Analysis
+
+We can then perform several statistical analysis over the dataset thanks to cypher and [py2neo](http://py2neo.org/v3/).
+
+### Bot Detection
+
+Here we investigate potential 'bot' users, characterized by a very high number of tweets containing similar messages. We ask the dataset for the number of users and the number of tweets they emitted:
+
+```cypher
+MATCH (u:User)-[:WRITES]->(t:Tweet)-[:EMITTED_IN]->(l:Loc)-[:IS_WITHIN]->(a:Airport)
+RETURN u AS user, count(t) AS nTweets, t AS tweet, count(u) AS nUsers
+ORDER BY nTweets DESC
+```
+
+Results allow to identify potential automatic users. We select the first in the ranking the the contents of its messages:
+
+```cypher
+MATCH (u:User {user_id:520225342})-[:WRITES]->(t:Tweet)
+return t.twitter_string AS string
+```
+
+The **/python/HammingDistance.py** script uses **py2neo** in order to collect information from Neo4j directly through a Python, where we can perform statistical analysis over the content of the messages. Here we plot the so called [Hamming Distance](https://en.wikipedia.org/wiki/Hamming_distance) among strings. This returns a bloxplot with the distribution of the distance among each pair of messages.
