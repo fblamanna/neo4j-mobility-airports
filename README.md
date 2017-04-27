@@ -70,16 +70,12 @@ Loading data into Neo4j can be done in two different ways: through the batch *Lo
 
 1. Directly from Cypher with the ```LOAD CSV``` function;
 2. Using a Python script with the [Neo4j Python driver](https://neo4j.com/developer/python/);
-3. Using the neo4j-import tool.
-
 
 #### Cypher (LOAD CSV)
 You can run directly the following cypher scripts within the Neo4j browser window or command line to import the full dataset:
 
-1. **/cypher/LOAD_CSV_Data.cypher**
-
 ```cypher
-// LOAD CSV
+// LOAD CSV - /cypher/LOAD_CSV_Data.cypher
 USING PERIODIC COMMIT
 LOAD CSV WITH HEADERS FROM 'file:///tweets_AIRPORT.csv' AS row FIELDTERMINATOR '|'
 WITH coalesce(toInteger(row.User_ID), "") AS u_id, toInteger(row.Datetime) AS dt, coalesce(row.Tweet, "") AS tw, toInteger(row.tweet_ID) AS t_id, toFloat(row.Latitude) AS lat, toFloat(row.Longitude) AS lon
@@ -105,10 +101,8 @@ DETACH DELETE user, t
 
 We can then proceed importing relationships of Locations within the airport area:
 
-2. **/cypher/LOAD_CSV_Airport.cypher**
-
 ```cypher
-// LOAD CSV Tweets within Airport
+// LOAD CSV Tweets within Airport - /cypher/LOAD_CSV_Airport.cypher
 USING PERIODIC COMMIT
 LOAD CSV WITH HEADERS FROM 'file:///tweets_in_AIRPORT.csv' AS row FIELDTERMINATOR '|'
 WITH toInteger(row.tweet_ID) AS t_id
