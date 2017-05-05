@@ -70,6 +70,7 @@ Loading data into Neo4j can be done in two different ways: through the batch *Lo
 
 1. Directly from Cypher with the ```LOAD CSV``` function;
 2. Using a Python script with the [Neo4j Python driver](https://neo4j.com/developer/python/);
+3. Using the neo4j-import tool.
 
 #### Cypher (LOAD CSV)
 You can run directly the following cypher scripts within the Neo4j browser window or command line to import the full dataset:
@@ -123,7 +124,7 @@ The **/python/Load_CSV.py** script can be used to manage all the indices and imp
 
 This will provide to set all constraints and indices, read the ***.cypher*** files and import them into the database.
 
-##### [:NEXT] Relation
+##### [:NEXT] Relationship
 The trickiest part here is to connect consecutive locations visited by each user with the [:NEXT] relation. To do so, we have to loop within each subgraph made by each user and all the locations that belong to him. The loop has to run within the Python script because here we can extract a list of all users ids with:
 
 ```python
@@ -148,6 +149,38 @@ for a in numberids:
 
 session.close()
 ```
+#### neo4j-import
+
+When you have very big files, it is worth to spent some time in data pre-processing in order to use the neo4j-import command line tool; it writes directly the files in the Neo4j format and it is significally faster than other approaches. However, files have to follow some syntax and format constraints that require some data pre-processing.
+
+##### Data Preprocessing
+
+The **/python/toImportTool.py** script get as input the ***.csv*** file to load and return as output a series of reduced ***.csv*** files as follows:
+
+1. **users.csv** to build the :User nodes;
+2. **locations.csv** to build the :Loc nodes;
+3. **tweets.csv** to build the :Tweet nodes;
+4. **rels-visited.csv** to build the [:VISITED] relationship;
+5. **rels-emitted_in.csv** to build the [:EMITTED_IN] relationship;
+6. **rels-writes.csv** to build the [:WRITES] relationship;
+7. **rels-next.csv** to build the [:NEXT] relationship;
+
+##### Running the Tool
+
+The tool can be run [according to your Neo4j installation](https://neo4j.com/docs/operations-manual/current/tools/import/command-line-usage/), basically following:
+
+```
+.bin/neo4j-import   --into [folder] \
+                    --nodes users.csv \
+                    --nodes locations.csv \
+                    --nodes tweets.csv \
+                    --relationships:VISITED rels-visited.csv \
+                    --relationships:EMITTED_IN rels-emitted_in.csv \
+                    --relationships:WRITES rels-writes.csv \
+                    --relationships:NEXT rels-next.csv\
+                    --delimiter "|"
+```
+
 ## Analysis
 
 We can then perform several statistical analysis over the dataset thanks to cypher and [py2neo](http://py2neo.org/v3/).
