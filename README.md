@@ -124,8 +124,23 @@ The **/python/Load_CSV.py** script can be used to manage all the indices and imp
 
 This will provide to set all constraints and indices, read the ***.cypher*** files and import them into the database.
 
-##### [:NEXT] Relationship
-The trickiest part here is to connect consecutive locations visited by each user with the [:NEXT] relation. To do so, we have to loop within each subgraph made by each user and all the locations that belong to him. The loop has to run within the Python script because here we can extract a list of all users ids with:
+##### [:NEXT] Relation
+The trickiest part here is to connect consecutive locations visited by each user with the [:NEXT] relation. To do so, we have to loop within each subgraph made by each user and all the locations that belong to him. 
+
+###### Cypher
+The following cypher query did the trick:
+
+```cypher
+// Create [:NEXT] Relationships
+MATCH (u:User)-[:VISITED]->(l:Location)
+WITH u,l
+ORDER BY l.datetime
+WITH u, COLLECT(l) as locs
+FOREACH(i in RANGE(0, size(locs)-2) | FOREACH(L1 in [locs[i]] | FOREACH(L2 in [locs[i+1]] | CREATE UNIQUE (L1)-[:NEXT]->(L2))))
+```
+
+###### Python
+The loop can be run within the Python script as well, extracting a list of all users ids with:
 
 ```python
 numberids = session.run("MATCH (user:User) RETURN user.user_id AS ids")
