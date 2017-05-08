@@ -2,7 +2,8 @@
 
 """
 Pre-processing Data in order to use the neo4j-import command.
-Required Packages: pandas, numpy
+The input file is expected to be compressed (.gzip).
+Required Packages: pandas, numpy.
 
 Execution:
 >> python toImport.py [airport code to load]
@@ -24,7 +25,6 @@ def toImport(airportcode):
 	df = pd.read_csv('../data/tweets_' + airportcode + '.csv.gz',
 					sep='|',
 					compression='gzip',
-					nrows = 1000,
 					usecols=['User_ID', 'tweet_ID', 'Datetime', 'Longitude', 'Latitude','Tweet'],
 					dtype={'User_ID':np.int, 'tweet_ID':np.int, 'Datetime':np.int, 'Longitude':np.float64, 'Latitude':np.float64, 'Tweet':str})
 
