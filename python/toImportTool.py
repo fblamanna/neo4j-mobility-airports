@@ -33,7 +33,7 @@ def toImport(airportcode):
 						sep='|')
 
 	# Nodes - Airport
-	airport = pd.DataFrame({'Airport:ID(Airport-ID)':1, 'airport_name': airportcode, ':LABEL': 'Airport'}, index=[0])
+	airport = pd.DataFrame({'Airport:ID(Airport-ID)': 0, 'airport_name': airportcode, ':LABEL': 'Airport'}, index=[0])
 	airport.to_csv('../import-tool/airport.csv', sep='|', index=False)
 
 	# Nodes - Users
@@ -63,13 +63,13 @@ def toImport(airportcode):
 
 	# Relationships - :WRITES
 	rels = pd.DataFrame()
-	rels[':START_ID(Users-ID)'] = users['User_ID:ID(Users-ID)']
-	rels[':END_IN(Tweet-ID)'] = tweets['Tweet_ID:ID(tweet-ID)']
+	rels[':START_ID(Users-ID)'] = locations['user_id']
+	rels[':END_IN(Tweet-ID)'] = locations['tweet_ID']
 	rels.to_csv('../import-tool/rels-writes.csv', sep='|', index=False)
 
 	# Relationships - :EMITTED_IN
 	rels = pd.DataFrame()
-	rels[':START_ID(Tweet-ID)'] = tweets['Tweet_ID:ID(tweet-ID)']
+	rels[':START_ID(Tweet-ID)'] = locations['tweet_ID']
 	rels[':END_IN(Loc-ID)'] = locations['Loc_ID:ID(Loc-ID)']
 	rels.to_csv('../import-tool/rels-emitted_in.csv', sep='|', index=False)
 
@@ -84,7 +84,7 @@ def toImport(airportcode):
 	rels = pd.DataFrame()
 	locations = locations[locations['tweet_ID'].isin(df_in['tweet_ID'])]
 	rels[':START_ID(Loc-ID)'] = locations['Loc_ID:ID(Loc-ID)']
-	rels[':END_IN'] = airportcode
+	rels[':END_IN(Airport-ID)'] = 0
 	rels.to_csv('../import-tool/rels-is_within.csv', sep='|', index=False)
 
 	# Relationships - :NEXT
