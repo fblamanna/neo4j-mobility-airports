@@ -175,10 +175,11 @@ The **/python/toImportTool.py** script get as input the ***.csv*** file to load 
 1. **users.csv** to build the :User nodes;
 2. **locations.csv** to build the :Loc nodes;
 3. **tweets.csv** to build the :Tweet nodes;
-4. **rels-visited.csv** to build the [:VISITED] relationship;
-5. **rels-emitted_in.csv** to build the [:EMITTED_IN] relationship;
-6. **rels-writes.csv** to build the [:WRITES] relationship;
-7. **rels-next.csv** to build the [:NEXT] relationship;
+4. **airport.csv** to build the :Airport node;
+5. **rels-visited.csv** to build the [:VISITED] relationship;
+6. **rels-emitted_in.csv** to build the [:EMITTED_IN] relationship;
+7. **rels-writes.csv** to build the [:WRITES] relationship;
+8. **rels-next.csv** to build the [:NEXT] relationship.
 
 ##### Running the Tool
 
@@ -189,6 +190,7 @@ The tool can be run [according to your Neo4j installation](https://neo4j.com/doc
                     --nodes users.csv \
                     --nodes locations.csv \
                     --nodes tweets.csv \
+                    --nodes airport.csv \
                     --relationships:VISITED rels-visited.csv \
                     --relationships:EMITTED_IN rels-emitted_in.csv \
                     --relationships:WRITES rels-writes.csv \
