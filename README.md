@@ -128,7 +128,7 @@ This will provide to set all constraints and indices, read the ***.cypher*** fil
 The trickiest part here is to connect consecutive locations visited by each user with the [:NEXT] relation. To do so, we have to loop within each subgraph made by each user and all the locations that belong to him. 
 
 ###### Cypher
-The following cypher query did the trick:
+The following cypher query (**/cypher/Load_CSV_Next.cypher**) did the trick:
 
 ```cypher
 // Create [:NEXT] Relationships
