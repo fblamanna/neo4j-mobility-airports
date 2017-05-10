@@ -96,7 +96,9 @@ CREATE UNIQUE (tweet)-[:EMITTED_IN]->(loc)
 Since we are dealing with possible incomplete data, the following script allows to delete nodes having *null* values for **tweet_id** and **user_id**:
 
 ```cypher
-MATCH (user:User {user_id:''}), (t:Tweet {twitter_string:''})
+MATCH (user:User {user_id:''})
+WITH user
+MATCH (t:Tweet {twitter_string:''})
 DETACH DELETE user, t
 ```
 
