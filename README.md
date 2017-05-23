@@ -189,7 +189,7 @@ The **/python/toImportTool.py** script get as input the ***.csv*** file to load 
 The tool can be run [according to your Neo4j installation](https://neo4j.com/docs/operations-manual/current/tools/import/command-line-usage/), basically following:
 
 ```
-.bin/neo4j-import --into ZRH \
+.bin/neo4j-import       --into <destination folder> \
                         --nodes users.csv \
                         --nodes locations.csv \
                         --nodes tweets.csv \
