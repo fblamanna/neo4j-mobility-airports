@@ -63,27 +63,27 @@ def toImport(airportcode):
 	# Relationships - :WRITES
 	rels = pd.DataFrame()
 	rels[':START_ID(Users-ID)'] = locations['user_id']
-	rels[':END_IN(Tweet-ID)'] = locations['tweet_ID']
+	rels[':END_ID(Tweet-ID)'] = locations['tweet_ID']
 	rels.to_csv('rels-writes.csv', sep='|', index=False)
 
 	# Relationships - :EMITTED_IN
 	rels = pd.DataFrame()
 	rels[':START_ID(Tweet-ID)'] = locations['tweet_ID']
-	rels[':END_IN(Loc-ID)'] = locations['Loc_ID:ID(Loc-ID)']
+	rels[':END_ID(Loc-ID)'] = locations['Loc_ID:ID(Loc-ID)']
 	rels.to_csv('rels-emitted_in.csv', sep='|', index=False)
 
 	# Relationships - :VISITED
 	rels = pd.DataFrame()
 	locations = locations.sort_values(by=['user_id','Datetime'])
 	rels[':START_ID(Users-ID)'] = locations['user_id']
-	rels[':END_IN(Loc-ID)'] = locations['Loc_ID:ID(Loc-ID)']
+	rels[':END_ID(Loc-ID)'] = locations['Loc_ID:ID(Loc-ID)']
 	rels.to_csv('rels-visited.csv', sep='|', index=False)
 
 	# Relationships - :IS_WITHIN
 	rels = pd.DataFrame()
 	locations = locations[locations['tweet_ID'].isin(df_in['tweet_ID'])]
 	rels[':START_ID(Loc-ID)'] = locations['Loc_ID:ID(Loc-ID)']
-	rels[':END_IN(Airport-ID)'] = 0
+	rels[':END_ID(Airport-ID)'] = 0
 	rels.to_csv('rels-is_within.csv', sep='|', index=False)
 
 	# Relationships - :NEXT
