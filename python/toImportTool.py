@@ -63,12 +63,12 @@ def toImport(airportcode):
 	# Relationships - :WRITES
 	rels = pd.DataFrame()
 	rels[':START_ID(Users-ID)'] = locations['user_id']
-	rels[':END_ID(Tweet-ID)'] = locations['tweet_ID']
+	rels[':END_ID(tweet-ID)'] = locations['tweet_ID']
 	rels.to_csv('rels-writes.csv', sep='|', index=False)
 
 	# Relationships - :EMITTED_IN
 	rels = pd.DataFrame()
-	rels[':START_ID(Tweet-ID)'] = locations['tweet_ID']
+	rels[':START_ID(tweet-ID)'] = locations['tweet_ID']
 	rels[':END_ID(Loc-ID)'] = locations['Loc_ID:ID(Loc-ID)']
 	rels.to_csv('rels-emitted_in.csv', sep='|', index=False)
 
