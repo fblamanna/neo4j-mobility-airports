@@ -181,23 +181,25 @@ The **/python/toImportTool.py** script get as input the ***.csv*** file to load 
 5. **rels-visited.csv** to build the [:VISITED] relationship;
 6. **rels-emitted_in.csv** to build the [:EMITTED_IN] relationship;
 7. **rels-writes.csv** to build the [:WRITES] relationship;
-8. **rels-next.csv** to build the [:NEXT] relationship.
+8. **rels-is_within.csv** to build the [:IS_WITHIN] relationship;
+9. **rels-next.csv** to build the [:NEXT] relationship.
 
 ##### Running the Tool
 
 The tool can be run [according to your Neo4j installation](https://neo4j.com/docs/operations-manual/current/tools/import/command-line-usage/), basically following:
 
 ```
-.bin/neo4j-import   --into [folder] \
-                    --nodes users.csv \
-                    --nodes locations.csv \
-                    --nodes tweets.csv \
-                    --nodes airport.csv \
-                    --relationships:VISITED rels-visited.csv \
-                    --relationships:EMITTED_IN rels-emitted_in.csv \
-                    --relationships:WRITES rels-writes.csv \
-                    --relationships:NEXT rels-next.csv\
-                    --delimiter "|"
+.bin/neo4j-import --into ZRH \
+                        --nodes users.csv \
+                        --nodes locations.csv \
+                        --nodes tweets.csv \
+                        --nodes airport.csv \
+                        --relationships:VISITED rels-visited.csv \
+                        --relationships:EMITTED_IN rels-emitted_in.csv \
+                        --relationships:WRITES rels-writes.csv \
+                        --relationships:IS_WITHIN rels-is_within.csv \
+                        --relationships:NEXT rels-next.csv \
+                        --delimiter "|"
 ```
 
 ## Analysis
