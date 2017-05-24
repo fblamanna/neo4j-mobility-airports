@@ -134,7 +134,7 @@ The following cypher query (**/cypher/Load_CSV_Next.cypher**) did the trick:
 
 ```cypher
 // Create [:NEXT] Relationships
-MATCH (u:User)-[:VISITED]->(l:Location)
+MATCH (u:User)-[:VISITED]->(l:Loc)
 WITH u,l
 ORDER BY l.datetime
 WITH u, COLLECT(l) as locs
@@ -190,10 +190,10 @@ The tool can be run [according to your Neo4j installation](https://neo4j.com/doc
 
 ```
 .bin/neo4j-import       --into <destination folder> \
-                        --nodes users.csv \
-                        --nodes locations.csv \
-                        --nodes tweets.csv \
-                        --nodes airport.csv \
+                        --nodes:User users.csv \
+                        --nodes:Loc locations.csv \
+                        --nodes:Tweet tweets.csv \
+                        --nodes:Airport airport.csv \
                         --relationships:VISITED rels-visited.csv \
                         --relationships:EMITTED_IN rels-emitted_in.csv \
                         --relationships:WRITES rels-writes.csv \
