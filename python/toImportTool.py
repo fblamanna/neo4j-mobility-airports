@@ -38,7 +38,6 @@ def toImport(airportcode):
 	# Nodes - Users
 	users = pd.DataFrame()
 	users['User_ID:ID(Users-ID)'] = df[['User_ID']]
-	users[':LABEL'] = 'User'
 	u = users.drop_duplicates()
 	u.to_csv('users.csv', sep='|', index=False)
 
@@ -50,14 +49,12 @@ def toImport(airportcode):
 	locations['Latitude'] = df[['Latitude']]
 	locations['Longitude'] = df[['Longitude']]
 	locations['tweet_ID'] = df[['tweet_ID']]
-	locations[':LABEL'] = 'Loc'
 	locations.to_csv('locations.csv', sep='|', index=False)
 
 	# Nodes - Tweets
 	tweets = pd.DataFrame()
 	tweets['Tweet_ID:ID(tweet-ID)'] = df[['tweet_ID']]
 	tweets['twitter_string'] = df[['Tweet']]
-	tweets[':LABEL'] = 'Tweet'
 	tweets.to_csv('tweets.csv', sep='|', index=False)
 
 	# Relationships - :WRITES
