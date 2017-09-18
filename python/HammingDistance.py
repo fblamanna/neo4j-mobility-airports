@@ -51,7 +51,7 @@ def Hamming(passw, query, variable):
 	# Import results from query to pandas Dataframe
 	df = pd.DataFrame(graph.data(query))
 
-	# Build combinations of the first 10 digits of each string
+	# Build combinations of the first 30 digits of each string
 	combs = list(itertools.combinations(df[variable].str[:30],2))
 
 	# Apply Function
